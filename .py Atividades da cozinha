@@ -1,0 +1,27 @@
+# models.py
+from django.db import models
+
+class Alimento(models.Model):
+    nome = models.CharField(max_length=100)
+    quantidade = models.IntegerField()
+    # ... outros campos
+
+class Equipamento(models.Model):
+    nome = models.CharField(max_length=100)
+    # ... outros campos
+
+class Aviso(models.Model):
+    descricao = models.TextField()
+    data_programada = models.DateField()
+    # ... outros campos
+
+# views.py
+from django.shortcuts import render
+from .models import Alimento
+
+def registrar_alimento(request):
+    if request.method == 'POST':
+        # Processar o formulário e salvar os dados
+    else:
+        form = AlimentoForm()  # Formulário Django
+    return render(request, 'registro_alimento.html', {'form': form})
