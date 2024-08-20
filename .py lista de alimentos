@@ -1,0 +1,49 @@
+# models.py
+from django.db import models
+
+class Alimento(models.Model):
+    nome = models.CharField(max_length=100)
+    quantidade = models.IntegerField()
+    data_validade = models.DateField()
+    categoria = models.CharField(max_length=50)
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+
+# views.py
+from django.shortcuts import render
+from .models import Alimento
+
+def lista_alimentos(request):
+    alimentos = Alimento.objects.all()
+    return render(request, 'alimentos/lista.html', {'alimentos': alimentos})
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('lista/', views.lista_alimentos, name='lista_alimentos'),
+]
+
+# templates/alimentos/lista.html
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Data de Validade</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alimento in alimentos %}
+        <tr>
+            <td>{{ alimento.nome }}</td>
+            <td>{{ alimento.quantidade }}</td>
+            <td>{{ alimento.data_validade }}</td>
+            <td>{{ alimento.categoria }}</td>
+            <td>R$ {{ alimento.preco }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
