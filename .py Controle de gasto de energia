@@ -1,0 +1,23 @@
+import RPi.GPIO as GPIO
+import time
+import pandas as pd
+
+# Configuração do GPIO
+GPIO.setmode(GPIO.BCM)
+sensor_pin = 4
+GPIO.setup(sensor_pin, GPIO.IN)
+
+# Função para ler o sensor e salvar os dados
+def ler_sensor():
+    consumo = GPIO.input(sensor_pin)
+    # Simulando um valor de consumo (substituir pela leitura real do sensor)
+    consumo = consumo * 10  # Watts
+
+    # Salvando os dados em um arquivo CSV
+    dados = pd.DataFrame({'timestamp': [time.time()], 'consumo': [consumo]})
+    dados.to_csv('consumo.csv', mode='a', header=False, index=False)
+
+# Loop principal
+while True:
+    ler_sensor()
+    time.sleep(60)  # Leitura a cada minuto 
